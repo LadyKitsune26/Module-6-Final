@@ -16,8 +16,8 @@ const Books = ({ books: initalBooks }) => {
             .slice()
             .sort(
               (a, b) =>
-                (a.year || a.year) -
-                (b.year || b.year)
+                (a.Year || a.Year) -
+                (b.Year || b.Year)
             )
         );
       case "NEW_TO_OLD":
@@ -26,8 +26,8 @@ const Books = ({ books: initalBooks }) => {
             .slice()
             .sort(
               (a, b) =>
-                (b.year || b.year) -
-                (a.year || a.year)
+                (b.Year || b.Year) -
+                (a.Year || a.Year)
             )
         );
       case "RATING":

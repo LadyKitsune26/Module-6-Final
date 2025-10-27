@@ -10,7 +10,7 @@ const BookInfo = ({ books, addItemToCart }) => {
   const { id } = useParams();
   const book = books.find((book) => +book.id === +id);
 
-  
+  console.log(books)
 
   return (
     <div id="books__body">
