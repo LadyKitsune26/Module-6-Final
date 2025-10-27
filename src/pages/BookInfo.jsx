@@ -10,6 +10,8 @@ const BookInfo = ({ books, addItemToCart }) => {
   const { id } = useParams();
   const book = books.find((book) => +book.id === +id);
 
+  
+
   return (
     <div id="books__body">
       <main id="books__main">
@@ -29,13 +31,7 @@ const BookInfo = ({ books, addItemToCart }) => {
               </figure>
               <div className="book__selected--description">
                 <h2 className="book__selected--title">{book.Title}</h2>
-                <Ratings rating={book.Metascore} />
-                <div className="book__selected--price">
-                  <Price
-                    originalPrice={book.originalPrice}
-                    salePrice={book.salePrice}
-                  />
-                </div>
+                <Ratings rating={book.Ratings} />
                 <div className="book__summary">
                   <h3 className="book__summary--title">Summary</h3>
                   <p className="book__summary--para">
