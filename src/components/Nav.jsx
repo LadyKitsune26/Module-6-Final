@@ -1,7 +1,7 @@
 
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import LibraryLogo from "../assets/Library.svg";
+import LibraryLogo from "../assets/2208.q703.031.F.m004.c7.FP movie film cinema poster banner.jpg";
 import { Link } from "react-router-dom";
 
 const Nav = ({ numberOfItems }) => {
@@ -27,20 +27,12 @@ const Nav = ({ numberOfItems }) => {
           </li>
           <li className="nav__list">
             <Link to="/books" className="nav__link nav__link--primary">
-              Books
+              Movies
             </Link>
           </li>
           <button className="btn__menu" onClick={openMenu}>
             <FontAwesomeIcon icon="bars" />
           </button>
-          <li className="nav__icon">
-            <Link to="/cart" className="nav__link">
-              <FontAwesomeIcon icon="shopping-cart" />
-            </Link>
-            {numberOfItems > 0 && (
-              <span className="cart__length">{numberOfItems}</span>
-            )}
-          </li>
         </ul>
 
         <div className="menu__backdrop">

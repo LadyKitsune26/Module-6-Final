@@ -8,10 +8,10 @@ const Explore = () => {
       <div className="container">
         <div className="row row__column">
           <h2>
-            Explore more <span className="purple">Books</span>
+            Explore more <span className="purple">Movies</span>
           </h2>
           <Link to="/books">
-            <button className="btn">Explore books</button>
+            <button className="btn">Explore movies</button>
           </Link>
         </div>
       </div>

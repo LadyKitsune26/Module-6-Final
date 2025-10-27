@@ -1,6 +1,6 @@
 
 import React from "react";
-import UndrawBooks from "../assets/Undraw_Books.svg";
+import UndrawBooks from "../assets/undraw_home-cinema_jdm1.svg";
 
 const Landing = () => {
   return (
@@ -8,12 +8,12 @@ const Landing = () => {
       <header>
         <div className="header__container">
           <div className="header__description">
-            <h1>America's most awarded online library platform</h1>
+            <h1>Find your next visual adventure</h1>
             <h2>
-              Find your dream book with <span className="purple">Library</span>
+              What adventure awaits with <span className="purple">MovieAdventure</span>
             </h2>
             <a href="#features">
-              <button className="btn">Browse books</button>
+              <button className="btn">Browse movies</button>
             </a>
           </div>
           <figure className="header__img--wrapper">
