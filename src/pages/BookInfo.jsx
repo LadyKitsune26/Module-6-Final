@@ -20,16 +20,16 @@ const BookInfo = ({ books, addItemToCart }) => {
                 <FontAwesomeIcon icon="arrow-left" />
               </Link>
               <Link to="/books" className="book__link">
-                <h2 className="book__selected--title--top">Books</h2>
+                <h2 className="book__selected--title--top">Movies</h2>
               </Link>
             </div>
             <div className="book__selected">
               <figure className="book__selected--figure">
-                <img className="book__selected--img" src={book.url} alt="" />
+                <img className="book__selected--img" src={book.Poster} alt="" />
               </figure>
               <div className="book__selected--description">
-                <h2 className="book__selected--title">{book.title}</h2>
-                <Ratings rating={book.rating} />
+                <h2 className="book__selected--title">{book.Title}</h2>
+                <Ratings rating={book.Metascore} />
                 <div className="book__selected--price">
                   <Price
                     originalPrice={book.originalPrice}
@@ -39,11 +39,7 @@ const BookInfo = ({ books, addItemToCart }) => {
                 <div className="book__summary">
                   <h3 className="book__summary--title">Summary</h3>
                   <p className="book__summary--para">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Veniam, repellendus modi odio porro, consequuntur,
-                    asperiores minima sint voluptatem at reiciendis ducimus
-                    neque provident alias iure nihil explicabo nobis id
-                    voluptas.
+                    {book.plot}
                   </p>
                   <p className="book__summary--para">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -53,19 +49,8 @@ const BookInfo = ({ books, addItemToCart }) => {
                     voluptas.
                   </p>
                 </div>
-                <button className="btn" onClick={() => addItemToCart(book)}>
-                  Add to Cart
-                </button>
               </div>
             </div>
-          </div>
-        </div>
-        <div className="books__container">
-          <div className="row">
-            <div className="book__selected--top">
-              <h2 className="book__selected--title--top">Recommended Books</h2>
-            </div>
-            <BestBooks id={id} />
           </div>
         </div>
       </main>

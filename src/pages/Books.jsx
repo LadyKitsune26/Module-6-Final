@@ -10,24 +10,24 @@ const Books = ({ books: initalBooks }) => {
 
   function filterBooks(filter) {
     switch (filter) {
-      case "LOW_TO_HIGH":
+      case "OLD_TO_NEW":
         return setBooks(
           books
             .slice()
             .sort(
               (a, b) =>
-                (a.salePrice || a.originalPrice) -
-                (b.salePrice || b.originalPrice)
+                (a.year || a.year) -
+                (b.year || b.year)
             )
         );
-      case "HIGH_TO_LOW":
+      case "NEW_TO_OLD":
         return setBooks(
           books
             .slice()
             .sort(
               (a, b) =>
-                (b.salePrice || b.originalPrice) -
-                (a.salePrice || a.originalPrice)
+                (b.year || b.year) -
+                (a.year || a.year)
             )
         );
       case "RATING":
@@ -45,7 +45,7 @@ const Books = ({ books: initalBooks }) => {
             <div className="row">
               <div className="books__header">
                 <h2 className="section__title books__header--title">
-                  All Books
+                  Search Movies
                 </h2>
                 <select
                   id="filter"
@@ -55,8 +55,8 @@ const Books = ({ books: initalBooks }) => {
                   <option value="DEFAULT" disabled>
                     Sort
                   </option>
-                  <option value="LOW_TO_HIGH">Price, Low to High</option>
-                  <option value="HIGH_TO_LOW">Price, High to Low</option>
+                  <option value="LOW_TO_HIGH">Year, Old to New</option>
+                  <option value="HIGH_TO_LOW">Year, New to Old</option>
                   <option value="RATING">Rating</option>
                 </select>
               </div>
