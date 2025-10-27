@@ -1,47 +1,22 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import Landing from "../components/Landing";
+import Highlights from "../components/Highlights";
+import Features from "../components/Featured";
+import CheapestBooks from "../components/CheapestBooks";
+import Explore from "../components/Explore";
 
- function Home() {
-  const [users, setUSers] = useState([])
-  const navigate = useNavigate();
-
-  async function getUsers(){
-    const {data} = await axios.get("https://jsonplaceholder.typicode.com/users")
-    setUSers(data)
-  }
-
-  useEffect(() =>{
-    getUsers();
-  }, []);
-
+const Home = () => {
   return (
-    <div className="container">
-  <div className="row">
-    <div className="user-list">
-      {users.map((user) => (
-        <div className="user" key={user.id} onClick={() => navigate(`${user.id}`)}>
-        <div className="user-card">
-          <div className="user-card__container">
-            <h3>{user.name}</h3>
-            <p>
-              <b>Email:</b>{ user.email}
-            </p>
-            <p>
-              <b>Phone:</b> {user.phone}
-            </p>
-            <p>
-              <b>Website:</b>
-              {user.website}
-            </p>
-          </div>
-        </div>
-      </div>
-      ))}
-    </div>
-  </div>
-</div>
-  )
-}
+    <>
+      <Landing />
+      <main>
+        <Highlights />
+        <Features />
+        <CheapestBooks />
+        <Explore />
+      </main>
+    </>
+  );
+};
 
-export default Home
+export default Home;
