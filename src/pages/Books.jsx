@@ -1,8 +1,35 @@
 import React, { useState, useEffect } from "react";
 import Book from "../components/Book";
+import { books as bookPromise } from "./data";
 
 const Books = ({ books: initalBooks }) => {
-  const [books, setBooks] = useState();
+  const [books, setBooks] = useState([]);
+
+useEffect(() => {
+
+bookPromise.then((data) => {
+
+const formattedBooks = data.map((movie) => ({
+
+id: movie.imdbID,
+
+title: movie.Title,
+
+url: movie.Poster,
+
+rating: Number(movie.imdbRating),
+
+originalPrice: 29.99,
+
+salePrice: null,
+
+}));
+
+setBooks(formattedBooks);
+
+});
+
+}, []);
 
   useEffect(() => {
     setBooks(initalBooks);
