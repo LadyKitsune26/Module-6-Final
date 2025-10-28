@@ -2,7 +2,7 @@
  
 export const books = new Promise(() => {
   fetch(
-    "https://www.omdbapi.com/?t=Guardians+of+the+Galaxy+Vol.+2&apikey=3dd6eeee"
+    "https://www.omdbapi.com/?apikey=3dd6eeee&s=avengers"
   )
     .then((response) => response.json())
     .then((data) => {

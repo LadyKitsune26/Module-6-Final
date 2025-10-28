@@ -46,7 +46,7 @@ const Book = ({ book }) => {
               {book.Title}
             </Link>
           </div>
-          <Ratings rating={book.rating} />
+          <Ratings rating={book.Rating} />
           <Price
             originalPrice={book.originalPrice}
             salePrice={book.salePrice}

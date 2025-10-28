@@ -2,70 +2,64 @@ import React, { useState, useEffect } from "react";
 import Book from "../components/Book";
 import { books as bookPromise } from "../data";
 
-const Books = ({ books: initalBooks }) => {
+const Books = ({ books: initialBooks }) => {
   const [books, setBooks] = useState([]);
 
-useEffect(() => {
-
-bookPromise.then((data) => {
-
-const results = data && data.Search ? data.Search : [];
-const formattedBooks = results.map((movie) => ({
-
-id: movie.imdbID,
-
-title: movie.Title,
-
-url: movie.Poster,
-
-rating: Number(movie.imdbRating),
-
-originalPrice: 29.99,
-
-salePrice: null,
-
-}));
-
-setBooks(formattedBooks);
-
-});
-
-}, []);
-
   useEffect(() => {
-    setBooks(initalBooks);
-  }, [initalBooks]);
+    if (bookPromise.then((data) => {
+      const results = data && data.Search ? data.Search : [];
+      const formattedBooks = results.map((movie) => ({
+        id: movie.imdbID,
 
-  function filterBooks(filter) {
-    switch (filter) {
-      case "OLD_TO_NEW":
-        return setBooks(
-          books
-            .slice()
-            .sort(
-              (a, b) =>
-                (a.Year || a.Year) -
-                (b.Year || b.Year)
-            )
-        );
-      case "NEW_TO_OLD":
-        return setBooks(
-          books
-            .slice()
-            .sort(
-              (a, b) =>
-                (b.Year || b.Year) -
-                (a.Year || a.Year)
-            )
-        );
-      case "RATING":
-        return setBooks(books.slice().sort((a, b) => b.rating - a.rating));
-      default:
-        break;
-    }
-  }
+        title: movie.Title,
 
-  return (
+        url: movie.Poster,
+
+        rating: Number(movie.imdbRating),
+
+        originalPrice: 29.99,
+
+        salePrice: null,
+      }));
+
+      setBooks(formattedBooks);
+    }));
+  }, []);
+
+  // useEffect(() => {
+  //   setBooks(initialBooks);
+  // }, [initialBooks]);
+
+  // function filterBooks(filter) {
+  //   switch (filter) {
+  //     case "OLD_TO_NEW":
+  //       return setBooks(
+  //         books
+  //           .slice()
+  //           .sort(
+  //             (a, b) =>
+  //               (a.Year || a.Year) -
+  //               (b.Year || b.Year)
+  //           )
+  //       );
+  //     case "NEW_TO_OLD":
+  //       return setBooks(
+  //         books
+  //           .slice()
+  //           .sort(
+  //             (a, b) =>
+  //               (b.Year || b.Year) -
+  //               (a.Year || a.Year)
+  //           )
+  //       );
+  //     case "RATING":
+  //       return setBooks(books.slice().sort((a, b) => b.rating - a.rating));
+  //     default:
+  //       break;
+  //   }
+  // }
+
+  else return (
     <div id="books__body">
       <main id="books__main">
         <section>
@@ -75,7 +69,7 @@ setBooks(formattedBooks);
                 <h2 className="section__title books__header--title">
                   Search Movies
                 </h2>
-                <select
+                {/* <select
                   id="filter"
                   onChange={(event) => filterBooks(event.target.value)}
                   defaultValue={"DEFAULT"}
@@ -86,7 +80,7 @@ setBooks(formattedBooks);
                   <option value="LOW_TO_HIGH">Year, Old to New</option>
                   <option value="HIGH_TO_LOW">Year, New to Old</option>
                   <option value="RATING">Rating</option>
-                </select>
+                </select> */}
               </div>
               <div className="books">
                 {Array.isArray(books) && books.map((book) => {
