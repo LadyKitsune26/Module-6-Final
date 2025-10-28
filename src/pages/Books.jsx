@@ -59,7 +59,7 @@ const Books = ({ books: initialBooks }) => {
   //   }
   // }
 
-  else return (
+  return (
     <div id="books__body">
       <main id="books__main">
         <section>
