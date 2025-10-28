@@ -11,7 +11,7 @@ const Book = ({ book }) => {
 
   useEffect(() => {
     const image = new Image();
-    image.src = book.url;
+    image.src = book.Poster;
     image.onload = () => {
       setTimeout(() => {
         if (mountedRef.current) {
@@ -23,7 +23,7 @@ const Book = ({ book }) => {
       // When the component unmounts
       mountedRef.current = false;
     };
-  }, [book.url]);
+  }, [book.Poster]);
 
   return (
     <div className="book">
@@ -36,14 +36,14 @@ const Book = ({ book }) => {
         </>
       ) : (
         <>
-          <Link to={`/books/${book.id}`}>
+          <Link to={`/books/${book.imdbID}`}>
             <figure className="book__img--wrapper">
               <img className="book__img" src={img.src} alt="" />
             </figure>
           </Link>
           <div className="book__title">
-            <Link to={`/books/${book.id}`} className="book__title--link">
-              {book.title}
+            <Link to={`/books/${book.imdbID}`} className="book__title--link">
+              {book.Title}
             </Link>
           </div>
           <Ratings rating={book.rating} />

@@ -9,7 +9,8 @@ useEffect(() => {
 
 bookPromise.then((data) => {
 
-const formattedBooks = data.map((movie) => ({
+const results = data && data.Search ? data.Search : [];
+const formattedBooks = results.map((movie) => ({
 
 id: movie.imdbID,
 
@@ -88,8 +89,8 @@ setBooks(formattedBooks);
                 </select>
               </div>
               <div className="books">
-                {books && books.map((book) => {
-                  return <Book book={book} key={book.id} />;
+                {Array.isArray(books) && books.map((book) => {
+                  return <Book book={book} key={book.imdbID} />;
                 })}
               </div>
             </div>
