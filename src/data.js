@@ -10,3 +10,5 @@ export const books = new Promise(() => {
     })
     .catch((error) => console.log(error));
 });
+
+export default books

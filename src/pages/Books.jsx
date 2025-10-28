@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Book from "../components/Book";
-import { books as bookPromise } from "./data";
+import { books as bookPromise } from "../data";
 
 const Books = ({ books: initalBooks }) => {
   const [books, setBooks] = useState([]);
