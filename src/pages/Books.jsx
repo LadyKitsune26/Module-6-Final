@@ -5,59 +5,67 @@ import { books as bookPromise } from "../data";
 const Books = ({ books: initialBooks }) => {
   const [books, setBooks] = useState([]);
 
-  useEffect(() => {
-    if (bookPromise.then((data) => {
-      const results = data && data.Search ? data.Search : [];
-      const formattedBooks = results.map((movie) => ({
-        id: movie.imdbID,
+    useEffect(() => {
+    bookPromise
+      .then((data) => {
+        // Safety logs
+        console.log("OMDb data:", data);
+        const results = Array.isArray(data?.Search) ? data.Search : [];
 
-        title: movie.Title,
+        // IMPORTANT: Use the exact keys Book.jsx expects
+        const formatted = results.map((movie) => ({
+          imdbID: movie.imdbID,
+          Title: movie.Title,
+          Poster: movie.Poster,
+          // The search endpoint doesn't return imdbRating; use 0 for now
+          Rating: 0,
+          originalPrice: 29.99,
+          salePrice: null,
+          Year: movie.Year,
+          BoxOffice: movie.BoxOffice
+        }));
 
-        url: movie.Poster,
-
-        rating: Number(movie.imdbRating),
-
-        originalPrice: 29.99,
-
-        salePrice: null,
-      }));
-
-      setBooks(formattedBooks);
-    }));
+        setBooks(formatted);
+      })
+      .catch((e) => console.error("Fetch error:", e));
   }, []);
 
-  // useEffect(() => {
-  //   setBooks(initialBooks);
-  // }, [initialBooks]);
+  useEffect(() => {
+    setBooks(initialBooks);
+  }, [initialBooks]);
 
-  // function filterBooks(filter) {
-  //   switch (filter) {
-  //     case "OLD_TO_NEW":
-  //       return setBooks(
-  //         books
-  //           .slice()
-  //           .sort(
-  //             (a, b) =>
-  //               (a.Year || a.Year) -
-  //               (b.Year || b.Year)
-  //           )
-  //       );
-  //     case "NEW_TO_OLD":
-  //       return setBooks(
-  //         books
-  //           .slice()
-  //           .sort(
-  //             (a, b) =>
-  //               (b.Year || b.Year) -
-  //               (a.Year || a.Year)
-  //           )
-  //       );
-  //     case "RATING":
-  //       return setBooks(books.slice().sort((a, b) => b.rating - a.rating));
-  //     default:
-  //       break;
-  //   }
-  // }
+  function filterBooks(filter) {
+    console.log("Filter applied:", filter)
+    switch (filter) {
+      case "OLD_TO_NEW":
+        console.log("Sorting from old to new")
+        return setBooks(
+          books
+            .slice()
+            .sort(
+              (a, b) =>
+                (a.Year || 0) -
+                (b.Year || 0)
+            )
+        );
+      case "NEW_TO_OLD":
+         console.log("Sorting from new to old")
+        return setBooks(
+          books
+            .slice()
+            .sort(
+              (a, b) =>
+                (b.Year || 0) -
+                (a.Year || 0)
+            )
+        );
+      // case "RATING":
+      //   console.log("Sorting by rating")
+      //   return setBooks(books.slice().sort((a, b) => b.Rating - a.Rating));
+      default:
+        break;
+    }
+  }
 
   return (
     <div id="books__body">
@@ -69,7 +77,7 @@ const Books = ({ books: initialBooks }) => {
                 <h2 className="section__title books__header--title">
                   Search Movies
                 </h2>
-                {/* <select
+                <select
                   id="filter"
                   onChange={(event) => filterBooks(event.target.value)}
                   defaultValue={"DEFAULT"}
@@ -77,10 +85,10 @@ const Books = ({ books: initialBooks }) => {
                   <option value="DEFAULT" disabled>
                     Sort
                   </option>
-                  <option value="LOW_TO_HIGH">Year, Old to New</option>
-                  <option value="HIGH_TO_LOW">Year, New to Old</option>
-                  <option value="RATING">Rating</option>
-                </select> */}
+                  <option value="OLD_TO_NEW">Year, Old to New</option>
+                  <option value="NEW_TO_OLD">Year, New to Old</option>
+                  {/* <option value="RATING">Rating</option> */}
+                </select>
               </div>
               <div className="books">
                 {Array.isArray(books) && books.map((book) => {

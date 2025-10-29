@@ -35,7 +35,7 @@ const BookInfo = ({ books, addItemToCart }) => {
                 <div className="book__summary">
                   <h3 className="book__summary--title">Summary</h3>
                   <p className="book__summary--para">
-                    {book.plot}
+                    {book.Plot}
                   </p>
                   <p className="book__summary--para">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
