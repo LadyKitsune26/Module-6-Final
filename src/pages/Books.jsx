@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Book from "../components/Book";
 import { books as bookPromise } from "../data";
+import { fetchMovies } from "../data";
+
+const data = await fetchMovies(searchTerm);
 
 const Books = ({ books: initialBooks }) => {
   const [books, setBooks] = useState([]);
