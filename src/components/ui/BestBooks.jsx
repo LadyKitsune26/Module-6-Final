@@ -1,4 +1,4 @@
-import { books } from "../../data";
+import { fetchMovies } from "../data";
 import React from "react";
 import Book from "../Book";
 
