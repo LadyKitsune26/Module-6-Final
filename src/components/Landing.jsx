@@ -1,23 +1,22 @@
 
-import React from "react";
+import React, { useState } from "react";
 import UndrawBooks from "../assets/undraw_home-cinema_jdm1.svg";
+import { useNavigate } from "react-router-dom";
 
-
-// function searchChange(event){
-//     renderMovies(event.target.value)
-// }
-
-// let currentMovies = []
-
-// async function renderMovies(searchTerm){
-//     console.log(`This is the searchTerm`,searchTerm);
-// const response = await fetch(`http://www.omdbapi.com/?s=${searchTerm}&apikey=3dd6eeee`)
-// const data = await response.json();
-// currentMovies = data.Search;
-//     displayMoives(currentMovies)
-// }
 
 const Landing = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
+
+  function handleSearchChange(e) {
+    setSearchTerm(e.target.value);
+  }
+
+  function handleSearchClick() {
+    if (searchTerm.trim() !== "") {
+      navigate(`/movies?search=${searchTerm}`);
+    }
+  }
   return (
     <section id="landing">
       <header>
@@ -25,10 +24,20 @@ const Landing = () => {
           <div className="header__description">
             <h1>Find your next visual adventure</h1>
             <h2>
-              What adventure awaits with <span className="purple">MovieAdventure</span>
+              What adventure awaits with{" "}
+              <span className="purple">MovieAdventure</span>
             </h2>
             <a href="#features">
-              <input className="input" placeholder="Browse movies" type="text" ></input><button className="btn click" >Search</button>
+              <input
+                className="input"
+                placeholder="Browse movies"
+                type="text"
+                value={searchTerm}
+                onChange={handleSearchChange}
+              />
+              <button className="btn click" onClick={handleSearchClick}>
+                Search
+              </button>
             </a>
           </div>
           <figure className="header__img--wrapper">

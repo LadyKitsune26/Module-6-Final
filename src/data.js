@@ -1,7 +1,7 @@
 // FAKE DATA
  
 export const books = new Promise((resolve, reject) => {
-  fetch("https://www.omdbapi.com/?apikey=3dd6eeee&s=avengers")
+  fetch(`http://www.omdbapi.com/?s=${searchTerm}&apikey=3dd6eeee`)
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
