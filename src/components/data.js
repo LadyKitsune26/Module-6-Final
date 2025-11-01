@@ -2,7 +2,7 @@
  
 
 export const fetchMovies = (searchTerm) => {
-  return fetch(`http://www.omdbapi.com/?s=${searchTerm}&apikey=3dd6eeee`)
+  return fetch(`http://www.omdbapi.com/?s=${searchTerm}&apikey=3d6eeeee`)
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
@@ -14,5 +14,3 @@ export const fetchMovies = (searchTerm) => {
 };
     
 
-
-export default fetchMovies

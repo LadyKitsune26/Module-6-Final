@@ -5,7 +5,7 @@ import Book from "../Book";
 const BestBooks = ({ id }) => {
   return (
     <div className="books">
-      {books
+      {fetchMovies(searchTerm)
         .filter((book) => {
           if (id) {
             // Check for id when on the individual book
