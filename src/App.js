@@ -8,6 +8,10 @@ import Nav from "./components/Nav";
 import Footer from "./components/Footer";
 import Cart from "./pages/Cart";
 
+const Movies = () => {
+  return <div>Movies Page</div>;
+}
+
 function App() {
   const [cart, setCart] = useState([]);
 
@@ -81,12 +85,13 @@ function App() {
       <div className="App">
         <Nav numberOfItems={numberOfItems()} />
         <Routes>
-          <Route path="/" element={<Home  />} />
-          <Route path="/books"element={<Books />}/>
+          <Route path="/" element={<Home />} />
+          <Route path="/books" element={<Books />} />
           <Route
             path="/books/:id"
-            element={<BookInfo  addItemToCart={addItemToCart} />}
+            element={<BookInfo addItemToCart={addItemToCart} />}
           />
+          <Route path="/movies" element={<Movies />} />
           <Route
             path="/cart"
             element={

@@ -1,78 +1,41 @@
-import React, { useState, useEffect, searchTerm } from "react";
+import React, { useState, useEffect } from "react";
 import Book from "../components/Book";
 import { fetchMovies } from "../components/data";
 
-
-
-const Books = ({ searchTerm, initialBooks }) => {
-  const [books, setBooks] = useState([]);
+const Books = ({ searchTerm = "avengers", initialBooks = [] }) => {
+  const [books, setBooks] = useState(initialBooks);
 
   useEffect(() => {
-  async function getMovies() {
-    const data = await fetchMovies(searchTerm); // you can replace "avengers" with the actual search term later
-    console.log(data);
-  }
+    if (!searchTerm) return;
+    console.log("Fetching movies for:", searchTerm);
 
-  getMovies();
-}, []);
-
-    useEffect(() => {
     fetchMovies(searchTerm)
       .then((data) => {
-        // Safety logs
         console.log("OMDb data:", data);
-        const results = Array.isArray(data?.Search) ? data.Search : [];
 
-        // IMPORTANT: Use the exact keys Book.jsx expects
+        const results = Array.isArray(data?.Search) ? data.Search : [];
         const formatted = results.map((movie) => ({
           imdbID: movie.imdbID,
           Title: movie.Title,
           Poster: movie.Poster,
-          // The search endpoint doesn't return imdbRating; use 0 for now
           Rating: 0,
           originalPrice: 0,
           salePrice: null,
           Year: movie.Year,
-          BoxOffice: movie.BoxOffice
+          BoxOffice: movie.BoxOffice,
         }));
 
         setBooks(formatted);
       })
       .catch((e) => console.error("Fetch error:", e));
-  }, []);
-
-  useEffect(() => {
-    setBooks(initialBooks);
-  }, [initialBooks]);
+  }, [searchTerm]);
 
   function filterBooks(filter) {
-    console.log("Filter applied:", filter)
     switch (filter) {
       case "OLD_TO_NEW":
-        console.log("Sorting from old to new")
-        return setBooks(
-          books
-            .slice()
-            .sort(
-              (a, b) =>
-                (a.Year || 0) -
-                (b.Year || 0)
-            )
-        );
+        return setBooks([...books].sort((a, b) => (a.Year || 0) - (b.Year || 0)));
       case "NEW_TO_OLD":
-         console.log("Sorting from new to old")
-        return setBooks(
-          books
-            .slice()
-            .sort(
-              (a, b) =>
-                (b.Year || 0) -
-                (a.Year || 0)
-            )
-        );
-      // case "RATING":
-      //   console.log("Sorting by rating")
-      //   return setBooks(books.slice().sort((a, b) => b.Rating - a.Rating));
+        return setBooks([...books].sort((a, b) => (b.Year || 0) - (a.Year || 0)));
       default:
         break;
     }
@@ -90,21 +53,20 @@ const Books = ({ searchTerm, initialBooks }) => {
                 </h2>
                 <select
                   id="filter"
-                  onChange={(event) => filterBooks(event.target.value)}
-                  defaultValue={"DEFAULT"}
+                  onChange={(e) => filterBooks(e.target.value)}
+                  defaultValue="DEFAULT"
                 >
                   <option value="DEFAULT" disabled>
                     Sort
                   </option>
                   <option value="OLD_TO_NEW">Year, Old to New</option>
                   <option value="NEW_TO_OLD">Year, New to Old</option>
-                  {/* <option value="RATING">Rating</option> */}
                 </select>
               </div>
               <div className="books">
-                {Array.isArray(books) && books.map((book) => {
-                  return <Book book={book} key={book.imdbID} />;
-                })}
+                {Array.isArray(books) && books.map((book) => (
+                  <Book book={book} key={book.imdbID} />
+                ))}
               </div>
             </div>
           </div>
