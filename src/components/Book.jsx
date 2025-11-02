@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import Price from "./ui/Price";
 import Ratings from "./ui/Ratings";
+import Year from "./ui/Year";
 
 const Book = ({ book }) => {
   const [img, setImg] = useState();
@@ -47,10 +48,11 @@ const Book = ({ book }) => {
             </Link>
           </div>
           <Ratings rating={book.Rating} />
-          <Price
+          <Year>{book.Year}</Year>
+          {/* <Price
             originalPrice={book.originalPrice}
             salePrice={book.salePrice}
-          />
+          /> */}
         </>
       )}
     </div>

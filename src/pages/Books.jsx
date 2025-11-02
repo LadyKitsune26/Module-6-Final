@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, searchTerm } from "react";
 import Book from "../components/Book";
 import { fetchMovies } from "../components/data";
 
@@ -30,7 +30,7 @@ const Books = ({ searchTerm, initialBooks }) => {
           Poster: movie.Poster,
           // The search endpoint doesn't return imdbRating; use 0 for now
           Rating: 0,
-          originalPrice: 29.99,
+          originalPrice: 0,
           salePrice: null,
           Year: movie.Year,
           BoxOffice: movie.BoxOffice
