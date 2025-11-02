@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
 import Book from "../components/Book";
-import { books as bookPromise } from "../components/data";
 import { fetchMovies } from "../components/data";
 
 
 
-const Books = ({ books: initialBooks }) => {
+const Books = ({ searchTerm, initialBooks }) => {
   const [books, setBooks] = useState([]);
 
   useEffect(() => {
   async function getMovies() {
-    const data = await fetchMovies("avengers"); // you can replace "avengers" with the actual search term later
+    const data = await fetchMovies(searchTerm); // you can replace "avengers" with the actual search term later
     console.log(data);
   }
 
@@ -18,7 +17,7 @@ const Books = ({ books: initialBooks }) => {
 }, []);
 
     useEffect(() => {
-    fetchMovies("avengers")
+    fetchMovies(searchTerm)
       .then((data) => {
         // Safety logs
         console.log("OMDb data:", data);
