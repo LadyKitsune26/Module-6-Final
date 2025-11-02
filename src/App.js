@@ -81,11 +81,11 @@ function App() {
       <div className="App">
         <Nav numberOfItems={numberOfItems()} />
         <Routes>
-          <Route path="/" element={<Home books={books} />} />
+          <Route path="/" element={<Home  />} />
           <Route path="/books"element={<Books />}/>
           <Route
             path="/books/:id"
-            element={<BookInfo books={books} addItemToCart={addItemToCart} />}
+            element={<BookInfo  addItemToCart={addItemToCart} />}
           />
           <Route
             path="/cart"
