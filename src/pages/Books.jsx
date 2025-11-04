@@ -1,45 +1,41 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import Book from "../components/Book";
 import { fetchMovies } from "../components/data";
 
-const Books = ({ searchTerm = "avengers", initialBooks = [] }) => {
-  const [books, setBooks] = useState(initialBooks);
+const Books = () => {
+  const [books, setBooks] = useState([]);
+  const location = useLocation();
+
+  // Extract `search` query from URL
+  const queryParams = new URLSearchParams(location.search);
+  const searchTerm = queryParams.get("search") || "avengers";
 
   useEffect(() => {
-    if (!searchTerm) return;
-    console.log("Fetching movies for:", searchTerm);
+    console.log("Searching for:", searchTerm);
 
     fetchMovies(searchTerm)
       .then((data) => {
-        console.log("OMDb data:", data);
+        console.log("API raw data:", data);
+
+        if (data?.Response === "False") {
+          console.warn("OMDb Error:", data.Error);
+          setBooks([]);
+          return;
+        }
 
         const results = Array.isArray(data?.Search) ? data.Search : [];
         const formatted = results.map((movie) => ({
           imdbID: movie.imdbID,
           Title: movie.Title,
           Poster: movie.Poster,
-          Rating: 0,
-          originalPrice: 0,
-          salePrice: null,
           Year: movie.Year,
-          BoxOffice: movie.BoxOffice,
         }));
 
         setBooks(formatted);
       })
       .catch((e) => console.error("Fetch error:", e));
-  }, [searchTerm]);
-
-  function filterBooks(filter) {
-    switch (filter) {
-      case "OLD_TO_NEW":
-        return setBooks([...books].sort((a, b) => (a.Year || 0) - (b.Year || 0)));
-      case "NEW_TO_OLD":
-        return setBooks([...books].sort((a, b) => (b.Year || 0) - (a.Year || 0)));
-      default:
-        break;
-    }
-  }
+  }, [searchTerm]); // ✅ re-run when search term changes
 
   return (
     <div id="books__body">
@@ -49,24 +45,15 @@ const Books = ({ searchTerm = "avengers", initialBooks = [] }) => {
             <div className="row">
               <div className="books__header">
                 <h2 className="section__title books__header--title">
-                  Search Movies
+                  Search Results for “{searchTerm}”
                 </h2>
-                <select
-                  id="filter"
-                  onChange={(e) => filterBooks(e.target.value)}
-                  defaultValue="DEFAULT"
-                >
-                  <option value="DEFAULT" disabled>
-                    Sort
-                  </option>
-                  <option value="OLD_TO_NEW">Year, Old to New</option>
-                  <option value="NEW_TO_OLD">Year, New to Old</option>
-                </select>
               </div>
               <div className="books">
-                {Array.isArray(books) && books.map((book) => (
-                  <Book book={book} key={book.imdbID} />
-                ))}
+                {books.length > 0 ? (
+                  books.map((book) => <Book key={book.imdbID} book={book} />)
+                ) : (
+                  <p>No results found.</p>
+                )}
               </div>
             </div>
           </div>

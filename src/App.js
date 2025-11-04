@@ -91,7 +91,7 @@ function App() {
             path="/books/:id"
             element={<BookInfo addItemToCart={addItemToCart} />}
           />
-          <Route path="/movies" element={<Movies />} />
+          <Route path="/movies" element={<Books />} />
           <Route
             path="/cart"
             element={

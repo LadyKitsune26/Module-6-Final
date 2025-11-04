@@ -1,8 +1,6 @@
-
 import React, { useState } from "react";
 import UndrawBooks from "../assets/undraw_home-cinema_jdm1.svg";
 import { useNavigate } from "react-router-dom";
-
 
 const Landing = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -12,11 +10,21 @@ const Landing = () => {
     setSearchTerm(e.target.value);
   }
 
-  function handleSearchClick() {
-    if (searchTerm.trim() !== "") {
-      navigate(`/movies?search=${searchTerm}`);
+  function handleSearch() {
+    const trimmed = searchTerm.trim();
+    if (trimmed !== "") {
+      navigate(`/movies?search=${encodeURIComponent(trimmed)}`);
     }
   }
+
+  // ✅ Trigger search when user presses Enter
+  function handleKeyDown(e) {
+    if (e.key === "Enter") {
+      e.preventDefault(); // prevents form submission/reload
+      handleSearch();
+    }
+  }
+
   return (
     <section id="landing">
       <header>
@@ -27,21 +35,24 @@ const Landing = () => {
               What adventure awaits with{" "}
               <span className="purple">MovieAdventure</span>
             </h2>
-            <a href="#features">
+
+            <div className="search__container">
               <input
                 className="input"
-                placeholder="Browse movies"
+                placeholder="Search movies"
                 type="text"
                 value={searchTerm}
                 onChange={handleSearchChange}
+                onKeyDown={handleKeyDown} // 👈 This enables Enter key search
               />
-              <button className="btn click" onClick={handleSearchClick}>
+              <button className="btn click" onClick={handleSearch}>
                 Search
               </button>
-            </a>
+            </div>
           </div>
+
           <figure className="header__img--wrapper">
-            <img src={UndrawBooks} alt="" />
+            <img src={UndrawBooks} alt="Cinema illustration" />
           </figure>
         </div>
       </header>
