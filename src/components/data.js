@@ -12,5 +12,13 @@ export const fetchMovies = (searchTerm) => {
       console.log(error);
     });
 };
+
+// Fetch a single movie by IMDb ID
+export const fetchMovieById = (imdbID) => {
+  return fetch(`https://www.omdbapi.com/?i=${imdbID}&apikey=YOUR_KEY`)
+    .then((res) => res.json())
+    .then((data) => data)
+    .catch((err) => console.error(err));
+};
     
 

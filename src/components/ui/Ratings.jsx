@@ -1,15 +1,16 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Ratings = ({ rating }) => {
+function Ratings({ rating }) {
+  const safeRating = Math.max(0, Number(rating) || 0); // ensure valid non-negative number
+
   return (
-    <div className="book__ratings">
-      {new Array(Math.floor(rating)).fill(0).map((_, index) => (
-        <FontAwesomeIcon icon="star" key={index} />
+    <div className="ratings">
+      {[...Array(safeRating)].map((_, index) => (
+        <i key={index} className="fa fa-star"></i>
       ))}
-      {!Number.isInteger(rating) && <FontAwesomeIcon icon="star-half-alt" />}
     </div>
   );
-};
+}
 
 export default Ratings;

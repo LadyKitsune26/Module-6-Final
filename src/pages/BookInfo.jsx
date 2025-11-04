@@ -1,16 +1,31 @@
-import React from "react";
-import { useParams } from "react-router";
+import React, { useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
 import Ratings from "../components/ui/Ratings";
-import Price from "../components/ui/Price";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
-import BestBooks from "../components/ui/BestBooks";
+import { fetchMovieById } from "../components/data"; // new helper function
 
-const BookInfo = ({ books, addItemToCart }) => {
+const BookInfo = ({ addItemToCart }) => {
   const { id } = useParams();
-  const book = books.find((book) => +book.imdbID === +id);
+  const [movie, setMovie] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  console.log(books)
+  useEffect(() => {
+    async function getMovie() {
+      try {
+        setLoading(true);
+        const data = await fetchMovieById(id);
+        setMovie(data);
+      } catch (error) {
+        console.error("Error fetching movie details:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    getMovie();
+  }, [id]);
+
+  if (loading) return <p>Loading movie details...</p>;
+  if (!movie) return <p>Movie not found.</p>;
 
   return (
     <div id="books__body">
@@ -18,32 +33,32 @@ const BookInfo = ({ books, addItemToCart }) => {
         <div className="books__container">
           <div className="row">
             <div className="book__selected--top">
-              <Link to="/books" className="book__link">
+              <Link to="/movies" className="book__link">
                 <FontAwesomeIcon icon="arrow-left" />
               </Link>
-              <Link to="/books" className="book__link">
+              <Link to="/movies" className="book__link">
                 <h2 className="book__selected--title--top">Movies</h2>
               </Link>
             </div>
             <div className="book__selected">
               <figure className="book__selected--figure">
-                <img className="book__selected--img" src={book.Poster} alt="" />
+                <img
+                  className="book__selected--img"
+                  src={movie.Poster}
+                  alt={movie.Title}
+                />
               </figure>
               <div className="book__selected--description">
-                <h2 className="book__selected--title">{book.Title}</h2>
-                <Ratings rating={book.Ratings} />
+                <h2 className="book__selected--title">{movie.Title}</h2>
+                <Ratings rating={movie.imdbRating} />
                 <div className="book__summary">
                   <h3 className="book__summary--title">Summary</h3>
+                  <p className="book__summary--para">{movie.Plot}</p>
                   <p className="book__summary--para">
-                    {book.Plot}
+                    Genre: {movie.Genre} | Director: {movie.Director} | Actors:{" "}
+                    {movie.Actors}
                   </p>
-                  <p className="book__summary--para">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Veniam, repellendus modi odio porro, consequuntur,
-                    asperiores minima sint voluptatem at reiciendis ducimus
-                    neque provident alias iure nihil explicabo nobis id
-                    voluptas.
-                  </p>
+                  <p className="book__summary--para">BoxOffice: {movie.BoxOffice}</p>
                 </div>
               </div>
             </div>

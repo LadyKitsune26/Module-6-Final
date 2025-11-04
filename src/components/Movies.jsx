@@ -1,16 +1,32 @@
-import React, { useState, useEffect } from "react";
-import Book from "./Book";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { fetchMovies } from "../components/data";
 
-function fetchMovies(searchTerm) {
-    return fetch(`https://www.omdbapi.com/?s=${searchTerm}&apikey=3dd6eeee`)
-.then((response) => response.json())
-.then((data) => {
-  console.log(data);
-  return data;
-})
-.catch((error) => {
-  console.log(error);
-});
+function Movies() {
+  const [movies, setMovies] = useState([]);
+  const location = useLocation();
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const searchTerm = params.get("search") || "avengers"; // fallback
+    fetchMovies(searchTerm).then((data) => {
+      if (data.Search) setMovies(data.Search);
+    });
+  }, [location.search]);
+
+  return (
+    <div className="movies-page">
+      <h1>Movies</h1>
+      <div className="movies-grid">
+        {movies.map((movie) => (
+          <div key={movie.imdbID} className="movie-card">
+            <img src={movie.Poster} alt={movie.Title} />
+            <h3>{movie.Title}</h3>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
 
-export { fetchMovies };
+export default Movies;
