@@ -1,16 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import Books from "./pages/Books";
-import BookInfo from "./pages/BookInfo";
+import Movies from "./components/Movies";
+import MoviesInfo from "./components/MoviesInfo";
 import { fetchMovies } from "./components/data";
+import MoviesGrid from "./components/MoviesGrid";
 import Nav from "./components/Nav";
 import Footer from "./components/Footer";
-import Cart from "./pages/Cart";
 
-const Movies = () => {
-  return <div>Movies Page</div>;
-}
 
 function App() {
   const [cart, setCart] = useState([]);
@@ -83,31 +80,19 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Nav numberOfItems={numberOfItems()} />
+        <Nav />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/books" element={<Books />} />
-          <Route
-            path="/books/:id"
-            element={<BookInfo addItemToCart={addItemToCart} />}
-          />
-          <Route path="/movies" element={<Books />} />
-          <Route
-            path="/cart"
-            element={
-              <Cart
-                cart={cart}
-                updateCart={updateCart}
-                removeItem={removeItem}
-                totals={calcPrices()}
-              />
-            }
-          />
+          <Route path="/movies" element={<Movies />} />
+          <Route path="/movies" element={<MoviesGrid movies={fetchMovies} />} />
+        <Route path="/movies/:id" element={<MoviesInfo />} />
         </Routes>
         <Footer />
       </div>
     </Router>
   );
-}
+};
+
+
 
 export default App;

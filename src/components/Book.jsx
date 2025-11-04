@@ -42,10 +42,15 @@ const Book = ({ book }) => {
               <img className="book__img" src={img.src} alt="" />
             </figure>
           </Link>
-          <div className="book__title">
-            <Link to={`/books/${book.imdbID}`} className="book__title--link">
-              {book.Title}
+          <div className="book-book__title" key={book.imdbID}>
+            <Link to={`/movies/${book.imdbID}`}>
+              <img
+                src={book.Poster}
+                alt={book.Title}
+                className="book__title--link"
+              />
             </Link>
+            <h3>{book.Title}</h3>
           </div>
           <Ratings rating={book.Rating} />
           <Year>{book.Year}</Year>
