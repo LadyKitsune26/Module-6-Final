@@ -8,9 +8,10 @@ export const fetchMovies = (searchTerm) => {
     .then((res) => res.json());
 };
 
-export const fetchMovieById = (imdbID) => {
-  return fetch(`https://www.omdbapi.com/?i=${imdbID}&apikey=${YOUR_KEY}`)
-    .then((res) => res.json());
+export const fetchMovieById = async (id) => {
+  const response = await fetch(`https://www.omdbapi.com/?i=${id}&apikey=${YOUR_KEY}&plot=full`);
+  const data = await response.json();
+  return data;
 };
     
 

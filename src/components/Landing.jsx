@@ -17,10 +17,9 @@ const Landing = () => {
     }
   }
 
-  // ✅ Trigger search when user presses Enter
   function handleKeyDown(e) {
     if (e.key === "Enter") {
-      e.preventDefault(); // prevents form submission/reload
+      e.preventDefault();
       handleSearch();
     }
   }
@@ -33,7 +32,7 @@ const Landing = () => {
             <h1>Find your next visual adventure</h1>
             <h2>
               What adventure awaits with{" "}
-              <span className="purple">MovieAdventure</span>
+              <span className="purple">CineVerse</span>
             </h2>
 
             <div className="search__container">
@@ -43,7 +42,7 @@ const Landing = () => {
                 type="text"
                 value={searchTerm}
                 onChange={handleSearchChange}
-                onKeyDown={handleKeyDown} // 👈 This enables Enter key search
+                onKeyDown={handleKeyDown} 
               />
               <button className="btn click" onClick={handleSearch}>
                 Search

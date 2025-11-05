@@ -7,6 +7,8 @@ import { fetchMovies } from "./components/data";
 import MoviesGrid from "./components/MoviesGrid";
 import Nav from "./components/Nav";
 import Footer from "./components/Footer";
+import Explore from "./components/Explore";
+import MoviesList from "./components/MoviesList";
 
 
 function App() {
@@ -83,9 +85,10 @@ function App() {
         <Nav />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/explore" element={<Explore />} />
           <Route path="/movies" element={<Movies />} />
-          <Route path="/movies" element={<MoviesGrid movies={fetchMovies} />} />
-        <Route path="/movies/:id" element={<MoviesInfo />} />
+          <Route path="/movies/:id" element={<MoviesInfo />} />
+          <Route path="/books" element={<MoviesList />} />
         </Routes>
         <Footer />
       </div>

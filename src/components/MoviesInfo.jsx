@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { fetchMovieById } from "./data";
 
 const MoviesInfo = () => {
   const { id } = useParams(); // Movie ID from the URL
@@ -7,24 +8,20 @@ const MoviesInfo = () => {
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (!id) return;
 
-    async function fetchMovieDetails() {
+
+  useEffect(() => {
+    const getMovie = async () => {
       try {
-        const res = await fetch(
-          `https://www.omdbapi.com/?i=${id}&apikey=3dd6eeee&plot=full`
-        );
-        const data = await res.json();
+        const data = await fetchMovieById(id);
         setMovie(data);
       } catch (error) {
-        console.error("Error fetching movie details:", error);
+        console.error("Error fetching movie:", error);
       } finally {
         setLoading(false);
       }
-    }
-
-    fetchMovieDetails();
+    };
+    getMovie();
   }, [id]);
 
   if (loading) return <p>Loading...</p>;

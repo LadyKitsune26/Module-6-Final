@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const Explore = () => {
   const [movies, setMovies] = useState([]);
 
-  const popularTerms = ["avengers", "batman", "superman", "spiderman", "star wars"];
+  const popularTerms = ["The", "heros", "fast", "Taxi", "war"];
 
   const handleExploreClick = async () => {
     try {
@@ -13,10 +13,8 @@ const Explore = () => {
         popularTerms.map((term) => fetchMovies(term))
       );
 
-      // Merge and flatten all movie results
       const merged = allResults
         .flatMap((data) => data?.Search || [])
-        // Remove duplicates by imdbID
         .filter(
           (movie, index, self) =>
             index === self.findIndex((m) => m.imdbID === movie.imdbID)
@@ -38,17 +36,20 @@ const Explore = () => {
           <button className="btn" onClick={handleExploreClick}>
             Explore movies
           </button>
-          <Link>
-            <div className="movies-grid">
-              {movies.length > 0 &&
-                movies.map((movie) => (
-                  <div key={movie.imdbID} className="movie-card">
-                    <img src={movie.Poster} alt={movie.Title} />
-                    <h3>{movie.Title}</h3>
-                  </div>
-                ))}
-            </div>
-          </Link>
+
+          <div className="movies-grid">
+            {movies.length > 0 &&
+              movies.map((movie) => (
+                <Link
+                  key={movie.imdbID}
+                  to={`/movies/${movie.imdbID}`} 
+                  className="movie-card"
+                >
+                  <img src={movie.Poster} alt={movie.Title} />
+                  <h3>{movie.Title}</h3>
+                </Link>
+              ))}
+          </div>
         </div>
       </div>
     </section>
