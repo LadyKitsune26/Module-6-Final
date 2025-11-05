@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { fetchMovies } from "./data";
+import { Link } from "react-router-dom";
 
 const Explore = () => {
   const [movies, setMovies] = useState([]);
@@ -37,16 +38,17 @@ const Explore = () => {
           <button className="btn" onClick={handleExploreClick}>
             Explore movies
           </button>
-
-          <div className="movies-grid">
-            {movies.length > 0 &&
-              movies.map((movie) => (
-                <div key={movie.imdbID} className="movie-card">
-                  <img src={movie.Poster} alt={movie.Title} />
-                  <h3>{movie.Title}</h3>
-                </div>
-              ))}
-          </div>
+          <Link>
+            <div className="movies-grid">
+              {movies.length > 0 &&
+                movies.map((movie) => (
+                  <div key={movie.imdbID} className="movie-card">
+                    <img src={movie.Poster} alt={movie.Title} />
+                    <h3>{movie.Title}</h3>
+                  </div>
+                ))}
+            </div>
+          </Link>
         </div>
       </div>
     </section>
